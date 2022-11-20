@@ -372,7 +372,7 @@ struct pbuf;
 
 typedef enum SMapStatus		{SMap_OK,SMap_Err,SMap_Con,SMap_TX} SMapStatus;
 
-SMap SMap0;
+extern SMap SMap0;
 
 //Function prototypes
 int			SMap_Init(void);
