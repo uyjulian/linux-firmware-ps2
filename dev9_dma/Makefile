@@ -14,7 +14,7 @@ IOP_INC_DIR = include/
 IOP_BIN  = $(IOP_BIN_DIR)dev9_dma.irx
 INST_BIN = ../compiled_irx/dev9_dma.irx
 IOP_OBJS = dev9_dma.o exports.o imports.o
-IOP_CFLAGS += -Isrc
+IOP_INCS = -Isrc
 
 all: $(IOP_BIN)
 
