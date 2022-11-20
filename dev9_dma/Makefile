@@ -14,9 +14,9 @@ IOP_INC_DIR = include/
 IOP_BIN  = $(IOP_BIN_DIR)dev9_dma.irx
 INST_BIN = ../compiled_irx/dev9_dma.irx
 IOP_OBJS = dev9_dma.o exports.o imports.o
-IOP_INCS = -I$(PS2SDK)/iop/include
+IOP_CFLAGS += -Isrc
 
-all: $(IOP_OBJS_DIR) $(IOP_BIN_DIR) $(IOP_BIN)
+all: $(IOP_BIN)
 
 clean:
 	rm -f -r $(IOP_OBJS_DIR) $(IOP_BIN_DIR)
@@ -28,6 +28,5 @@ $(INST_BIN): $(IOP_BIN)
 
 install: $(INST_BIN)
 
-include $(PS2SDKSRC)/Defs.make
-include $(PS2SDKSRC)/iop/Rules.make
-include $(PS2SDKSRC)/iop/Rules.release
+include $(PS2SDK)/Defs.make
+include $(PS2SDK)/samples/Makefile.iopglobal

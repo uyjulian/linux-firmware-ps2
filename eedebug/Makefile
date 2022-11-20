@@ -9,13 +9,14 @@
 IOP_OBJS_DIR = obj/
 IOP_BIN_DIR = bin/
 IOP_SRC_DIR = src/
+IOP_INC_DIR = include/
 
 IOP_BIN  = $(IOP_BIN_DIR)eedebug.irx
 INST_BIN = ../compiled_irx/eedebug.irx
 IOP_OBJS = eedebug.o imports.o
-IOP_INCS = -I../include
+IOP_INCS = -Isrc -I../include
 
-all: $(IOP_OBJS_DIR) $(IOP_BIN_DIR) $(IOP_BIN)
+all: $(IOP_BIN)
 
 clean:
 	rm -f -r $(IOP_OBJS_DIR) $(IOP_BIN_DIR)
@@ -27,6 +28,5 @@ $(INST_BIN): $(IOP_BIN)
 
 install: $(INST_BIN)
 
-include $(PS2SDKSRC)/Defs.make
-include $(PS2SDKSRC)/iop/Rules.make
-include $(PS2SDKSRC)/iop/Rules.release
+include $(PS2SDK)/Defs.make
+include $(PS2SDK)/samples/Makefile.iopglobal

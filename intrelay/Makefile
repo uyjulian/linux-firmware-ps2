@@ -22,7 +22,6 @@ ifeq ($(DEV9_SUPPORT),yes)
 DEV9_TYPE=-dev9
 
 IOP_CFLAGS += -DDEV9_SUPPORT
-IOP_INCS += -I$(PS2SDKSRC)/iop/dev9/dev9/include
 else
 DEV9_TYPE=-direct
 endif
@@ -31,11 +30,11 @@ IOP_BIN  = bin/intrelay$(DEV9_TYPE)$(IRQ_TYPE).irx
 INST_BIN = ../compiled_irx/intrelay$(DEV9_TYPE)$(IRQ_TYPE).irx
 
 IOP_OBJS = intrelay.o imports.o usb.o
-IOP_INCS += -I../include
+IOP_INCS += -Isrc -I../include
 IOP_CFLAGS  += -Wall -fno-builtin-printf -fno-builtin-memcpy -Wimplicit-int -Werror-implicit-function-declaration -Werror
 IOP_LDFLAGS += -s
 
-all: $(IOP_OBJS_DIR) $(IOP_BIN_DIR) $(IOP_BIN)
+all: $(IOP_BIN)
 
 clean:
 	rm -f -r $(IOP_OBJS_DIR) $(IOP_BIN_DIR)
@@ -47,6 +46,5 @@ $(INST_BIN): $(IOP_BIN)
 
 install: $(INST_BIN)
 
-include $(PS2SDKSRC)/Defs.make
-include $(PS2SDKSRC)/iop/Rules.make
-include $(PS2SDKSRC)/iop/Rules.release
+include $(PS2SDK)/Defs.make
+include $(PS2SDK)/samples/Makefile.iopglobal
