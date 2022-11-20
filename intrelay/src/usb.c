@@ -17,7 +17,7 @@ typedef struct _hcTd {
 	void   *curBufPtr;
 	struct _hcTd *next;
 	void   *bufferEnd;
-} HcTD_t __attribute__ ((packed));
+} HcTD_t;
 
 typedef struct _hcEd {
 	u16 hcArea;
@@ -25,7 +25,7 @@ typedef struct _hcEd {
 	HcTD_t  *tdTail;
 	HcTD_t  *tdHead;
 	struct _hcEd *next;
-} HcED_t __attribute__ ((packed));
+} HcED_t;
 
 typedef struct {
 	volatile HcED_t   *InterruptTable[32];
@@ -34,7 +34,7 @@ typedef struct {
 	volatile HcTD_t   *DoneHead;
 	volatile u8  reserved[116];
 	volatile u32 pad2; // expand struct to 256 bytes for alignment
-} HcCA_t __attribute__ ((packed));
+} HcCA_t;
 
 typedef struct {
 	volatile u32 HcRevision;
@@ -59,7 +59,7 @@ typedef struct {
 	volatile u32 HcRhDescriptorB;
 	volatile u32 HcRhStatus;
 	volatile u32 HcRhPortStatus[2];
-} OhciRegs_t __attribute__ ((packed));
+} OhciRegs_t;
 
 /** Initialize USB for later use and reset OHCI chip. */
 void initUSB(void)
