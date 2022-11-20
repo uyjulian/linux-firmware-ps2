@@ -5,3 +5,5 @@ obj*/
 eedebug/*.irx
 smaprpc/*.irx
 
+*.irx
+
