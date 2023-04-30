@@ -27,7 +27,7 @@
       "steps" : [
         {
           "name" : "Install dependencies",
-          "run" : "apk add build-base git zip"
+          "run" : "apk add build-base git zip tar"
         },
         {
           "name" : "Checkout repository",
