@@ -46,7 +46,7 @@
         },
         {
           "name" : "Create tarball",
-          "run" : "tar -czf linux-firmware-ps2.tar.gz --owner=0 --group=0 --numeric-owner --transform='s#^./#firmware/ps2/#' -C compiled_irx/ ."
+          "run" : "tar -czf linux-firmware-ps2.tar.gz --owner=0 --group=0 --numeric-owner --transform='s#^.*/#firmware/ps2/#' -C compiled_irx/ ."
         },
         {
           "name" : "Upload linux firmware artifact",
