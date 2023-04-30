@@ -42,7 +42,6 @@ clean:
 
 $(INST_BIN): $(IOP_BIN)
 	cp $(IOP_BIN) ../compiled_irx/
-	cp $(IOP_BIN) ../../linux/firmware/ps2/
 
 install: $(INST_BIN)
 
