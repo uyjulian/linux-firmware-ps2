@@ -1,0 +1,86 @@
+{
+  "name" : "Continuous Integration",
+  "on" : {
+    "push" : {
+      "paths" : [
+        "**"
+      ]
+    },
+    "pull_request" : {
+      "paths" : [
+        "**"
+      ]
+    }
+  },
+  "jobs" : {
+    "build-ps2" : {
+      "runs-on" : "ubuntu-20.04",
+      "container" : "ps2dev/ps2dev:v1.0",
+      "timeout-minutes" : 30,
+      "env" : {
+        "HOMEBREW_NO_ANALYTICS" : "1",
+        "HOMEBREW_NO_AUTO_UPDATE" : "1",
+        "HOMEBREW_NO_INSTALL_UPGRADE" : "1",
+        "HOMEBREW_NO_INSTALL_CLEANUP" : "1",
+        "CMAKE_GENERATOR" : "Ninja"
+      },
+      "steps" : [
+        {
+          "name" : "Install dependencies",
+          "run" : "apk add build-base git zip"
+        },
+        {
+          "name" : "Checkout repository",
+          "uses" : "actions/checkout@v2",
+          "with" : {
+            "submodules" : "recursive"
+          }
+        },
+        {
+          "name" : "Make project",
+          "run" : "make all"
+        },
+        {
+          "name" : "Make install project",
+          "run" : "make install"
+        },
+        {
+          "name" : "Create tarball",
+          "run" : "tar -czf linux-firmware-ps2.tar.gz --owner=0 --group=0 --numeric-owner --transform='s#^./#firmware/ps2/#' -C compiled_irx/ ."
+        },
+        {
+          "name" : "Upload linux firmware artifact",
+          "uses" : "actions/upload-artifact@master",
+          "with" : {
+            "name" : "linux-firmware-ps2",
+            "path" : "linux-firmware-ps2.tar.gz"
+          }
+        }
+      ]
+    },
+    "create-release" : {
+      "needs" : [
+        "build-ps2"
+      ],
+      "runs-on" : "ubuntu-20.04",
+      "timeout-minutes" : 5,
+      "if" : "startsWith(github.ref, 'refs/tags/v')",
+      "steps" : [
+        {
+          "name" : "Download all artifacts",
+          "uses" : "actions/download-artifact@v3"
+        },
+        {
+          "name" : "Create release",
+          "if" : "startsWith(github.ref, 'refs/tags/v')",
+          "uses" : "marvinpinto/action-automatic-releases@latest",
+          "with" : {
+            "repo_token" : "${{ secrets.GITHUB_TOKEN }}",
+            "prerelease" : "${{ contains(github.ref, '-rc') }}",
+            "files" : "**/**.gz"
+          }
+        }
+      ]
+    }
+  }
+}
